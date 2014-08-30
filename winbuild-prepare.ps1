@@ -109,7 +109,7 @@ function update-config-file($argtable)
         }
     }
 
-    if (($argtable["tag"].Length -gt 0) -and ($argtable["branch"].Length -eq 0))
+    if (($argtable["tag"].Length -gt 0))
     {
         $ret = write-config-value -config $global:cfgfile -name "BuildTag" -value $argtable["tag"]
         if (!$ret)
