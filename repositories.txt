@@ -7,3 +7,4 @@ xc-windows
 msi-installer
 win-tools
 idl
+xc-vusb
