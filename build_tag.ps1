@@ -27,7 +27,15 @@ if (! (Test-Path build-machines)) {
   Invoke-CommandChecked "clone build-machines" $gitbin clone https://github.com/dickon/build-machines.git 
 }
 
-Invoke-CommandChecked "do_tag" $pythonbin build-machines\do_tag.py -b $branch -r $repos $site-$buildtype- -i openxtwin -t -f
+$tagnum = & $pythonbin build-machines\do_tag.py -b $branch -r $repos $site-$buildtype- -i openxtwin -t -f --git-binary $gitbin
 
+if ($LastExitCode -ne 0) {
+  throw "Unable to tag code $LastExitCode out $tagnum"
+}
 
+$tag = $site+"-"+$buildtype+"-"+$tagnum+"-"+$branch
 
+Write-Host "Tag $tag"
+Invoke-CommandChecked "clone openxtwin for tag" $gitbin clone ($repos+'/openxtwin.git') openxt-$tag
+Push-Location openxt-$tag
+Invoke-CommandChecked "checkout tag" $gitbin checkout $tag
