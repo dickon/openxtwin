@@ -97,7 +97,7 @@ function update-config-file($argtable)
     }
     else
     {
-        if ($argtable["tag"].Length -eq 0)
+        if ((!($argtable.Contains("tag"))) -or ($argtable["tag"] -eq 0))
         {
             $ret = write-config-value -config $global:cfgfile -name "BuildBranch" -value "master"
             if (!$ret)
