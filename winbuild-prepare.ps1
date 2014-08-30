@@ -68,6 +68,11 @@ function update-config-file($argtable)
     {
         throw "No build number value specified in the input!"
     }
+    
+    if (($argtable["branch"] -gt 0) -and ($argtable["tag"] -gt 0)) { 
+        throw "Specify either branch $branch or tag $tag but not both"
+    }
+
 
     # The Windows tools build number is truncated from the XenClient
     # build number using the following arguments. Note if the Windows
