@@ -4,6 +4,6 @@ master
 # the remaining lines are a list repositories that should get tagged
 openxtwin
 xc-windows
-msi-intaller
+msi-installer
 win-tools
 idl
