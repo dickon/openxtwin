@@ -3,6 +3,7 @@ param (
   [string]$builddirectory,
   [string]$user,
   [string]$branch,
+  [string]$certname,
   [string]$buildtype="openxtwin",
   [string]$gitbin="C:\Program Files\Git\bin\git.exe",
   [string]$pythonbin="C:\Python27\python.exe"
@@ -39,3 +40,6 @@ Write-Host "Tag $tag"
 Invoke-CommandChecked "clone openxtwin for tag" $gitbin clone ($repos+'/openxtwin.git') openxt-$tag
 Push-Location openxt-$tag
 Invoke-CommandChecked "checkout tag" $gitbin checkout $tag
+Invoke-CommandChecked "winbuild prepare" powershell .\winbuild-prepare.ps1 tag=$tag config=sample-config.xml build=$tagnum certname=$certname giturl=$repos
+Invoke-CommandChecked "winbuild all" powershell .\winbuild-all.ps1
+
