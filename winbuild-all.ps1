@@ -86,17 +86,14 @@ foreach($step in $xmlroot.Steps.ChildNodes)
        {
            Push-Location -Path $step.name
            log-info -info ("Checking out: " + $branch + " For: " + $step.name)
-	   & $gitbin fetch origin | Out-Host
-	   if ($LastExitCode -ne 0) {
-               throw "unable to fetch in $step.name"
-           }
+	   Invoke-CommandChecked "git fetch origin" $gitbin fetch origin
            if ($branch.CompareTo("master") -eq 0) {
-               & $gitbin checkout -q $branch | Out-Host
+               Invoke-CommandChecked "git checkout master" $gitbin checkout $branch
            } else {
-               & $gitbin checkout -q origin/$branch -b $branch | Out-Host
-               #If error, just do a checkout defaulted to master
+               & $gitbin checkout origin/$branch -b $branch | Out-Host
+               #If error, create a branch with the name we want but referring to origin/master
                if($LastExitCode -ne 0){
-		    & gitbin checkout -q -b $branch | Out-Host
+	       	    Invoke-CommandChecked "git checkout fallback to master" $gitbin checkout origin/master -b $branch
                }
            }
            
