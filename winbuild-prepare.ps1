@@ -53,7 +53,7 @@ function update-version-value($name, $value)
 function update-config-file($argtable)
 {
     #The version file must be present in the parent directory...
-    $contents = Get-Content ..\version | %{$versionValues = @{}} {if ($_ -match "(.*)=(.*)") {$versionValues[$matches[1]]=$matches[2];}}
+    $contents = Get-Content version | %{$versionValues = @{}} {if ($_ -match "(.*)=(.*)") {$versionValues[$matches[1]]=$matches[2];}}
 
     if(!$?){
         throw "Could not read version file"
